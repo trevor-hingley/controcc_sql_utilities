@@ -16,5 +16,48 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 		{
 			InitializeComponent();
 		}
+
+		#region Tools Menu Items
+
+		private void scriptParserViewerToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OpenMDIChildWindow(new wScriptParserViewer());
+		}
+
+		private void scriptCheckerToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			OpenMDIChildWindow(new wScriptChecker());
+		}
+
+		#endregion
+
+		#region Windows Menu Items
+
+		private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.LayoutMdi(MdiLayout.Cascade);
+		}
+
+		private void tileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.LayoutMdi(MdiLayout.TileHorizontal);
+		}
+
+		private void tileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.LayoutMdi(MdiLayout.TileVertical);
+		}
+
+		#endregion
+
+		#region Helper methods
+
+		private void OpenMDIChildWindow(Form windowForm)
+		{
+			windowForm.MdiParent = this;
+			windowForm.Show();
+		}
+		
+		#endregion
 	}
 }
