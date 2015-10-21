@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
-	public partial class wScriptChecker : Form
+	public partial class wScriptChecker2 : OxfordCC.ContrOCC.SQLUtilities.Presentation.wScriptBase
 	{
-		public wScriptChecker()
+		public wScriptChecker2()
 		{
 			InitializeComponent();
 		}

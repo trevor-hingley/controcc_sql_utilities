@@ -21,12 +21,12 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		private void scriptParserViewerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			OpenMDIChildWindow(new wScriptParserViewer());
+			OpenMDIChildWindow(new wScriptParserViewer2());
 		}
 
 		private void scriptCheckerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			OpenMDIChildWindow(new wScriptChecker());
+			OpenMDIChildWindow(new wScriptChecker2());
 		}
 
 		#endregion

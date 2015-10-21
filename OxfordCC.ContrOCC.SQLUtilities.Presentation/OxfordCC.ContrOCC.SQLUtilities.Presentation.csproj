@@ -67,17 +67,23 @@
     <Compile Include="wMDI.Designer.cs">
       <DependentUpon>wMDI.cs</DependentUpon>
     </Compile>
-    <Compile Include="wScriptChecker.cs">
+    <Compile Include="wScriptBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="wScriptChecker.Designer.cs">
-      <DependentUpon>wScriptChecker.cs</DependentUpon>
+    <Compile Include="wScriptBase.Designer.cs">
+      <DependentUpon>wScriptBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="wScriptParserViewer.cs">
+    <Compile Include="wScriptChecker2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="wScriptParserViewer.Designer.cs">
-      <DependentUpon>wScriptParserViewer.cs</DependentUpon>
+    <Compile Include="wScriptChecker2.Designer.cs">
+      <DependentUpon>wScriptChecker2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wScriptParserViewer2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="wScriptParserViewer2.Designer.cs">
+      <DependentUpon>wScriptParserViewer2.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -92,11 +98,14 @@
     <EmbeddedResource Include="wMDI.resx">
       <DependentUpon>wMDI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="wScriptChecker.resx">
-      <DependentUpon>wScriptChecker.cs</DependentUpon>
+    <EmbeddedResource Include="wScriptBase.resx">
+      <DependentUpon>wScriptBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="wScriptParserViewer.resx">
-      <DependentUpon>wScriptParserViewer.cs</DependentUpon>
+    <EmbeddedResource Include="wScriptChecker2.resx">
+      <DependentUpon>wScriptChecker2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wScriptParserViewer2.resx">
+      <DependentUpon>wScriptParserViewer2.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -109,7 +118,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,18 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System.Configuration;
 using System.IO;
 
 namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
 	public class oScriptParser
 	{
+		TSqlParser _parser;
+
+		public oScriptParser()
+		{
+			switch (ConfigurationManager.AppSettings["ParserCompatibilityLevel"])
+			{
+				case "90":
+					_parser = new TSql90Parser(true);
+					break;
+				case "100":
+					_parser = new TSql100Parser(true);
+					break;
+				case "110":
+					_parser = new TSql110Parser(true);
+					break;
+				default:
+					throw new ArgumentException("Invalid argument provided for [ParserCompatibilityLevel] configuration setting!");
+					break;
+			}
+		}
+
 		public TSqlFragment GetRootFragment(TextReader textReader, out IList<ParseError> parseErrors)
 		{
-			TSqlParser parser = new TSql90Parser(true);
-			TSqlFragment sqlFragment = parser.Parse(textReader, out parseErrors);
-
-			return sqlFragment;
+			return _parser.Parse(textReader, out parseErrors);
 		}
 
 		public List<TSqlFragment> GetFragmentChildren(TSqlFragment parentFragment)

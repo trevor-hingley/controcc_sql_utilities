@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Microsoft.SqlServer.TransactSql.ScriptDom;
@@ -13,42 +11,20 @@ using System.IO;
 
 namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
-	public partial class wScriptParserViewer : Form
+	public partial class wScriptParserViewer2 : OxfordCC.ContrOCC.SQLUtilities.Presentation.wScriptBase
 	{
-		oScriptParser _scriptParser = new oScriptParser();
-
-		public wScriptParserViewer()
+		public wScriptParserViewer2()
 		{
 			InitializeComponent();
 		}
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		protected override void ClearWindow()
 		{
-			OpenFileDialog ofd = new OpenFileDialog();
-
-			ofd.Filter = "(SQL Script) | *.sql";
-
-			if (ofd.ShowDialog() == DialogResult.OK)
-			{
-				Cursor saveCursor = this.Cursor;
-
-				try
-				{
-					this.Cursor = Cursors.WaitCursor;
-					InitialiseDisplay(ofd.FileName);
-				}
-				catch
-				{ }
-				finally
-				{
-					this.Cursor = saveCursor;
-				}
-			}
+			tvwFragmentTree.Nodes.Clear();
+			txtFragmentSQL.Text = string.Empty;
 		}
 
-		#region Treeview methods
-
-		private void InitialiseDisplay(string scriptFilePath)
+		protected override void OpenScript(string scriptFilePath)
 		{
 			IList<ParseError> parseErrors;
 			TSqlFragment rootFragment;
@@ -58,7 +34,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 			using (TextReader textReader = new StreamReader(scriptFilePath))
 			{
-				rootFragment = _scriptParser.GetRootFragment(textReader, out parseErrors);
+				rootFragment = ScriptParser.GetRootFragment(textReader, out parseErrors);
 			}
 
 			if ((parseErrors == null) || (parseErrors.Count == 0))
@@ -83,6 +59,8 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			}
 		}
 
+		#region Treeview methods
+
 		private void ExpandTreeNode(TreeNode treeNode)
 		{
 			TreeNode child = treeNode.FirstNode;
@@ -99,7 +77,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			if (treeNode.GetNodeCount(false) == 0)
 			{
 				TSqlFragment parentFragment = (TSqlFragment)treeNode.Tag;
-				List<TSqlFragment> children = _scriptParser.GetFragmentChildren(parentFragment);
+				List<TSqlFragment> children = ScriptParser.GetFragmentChildren(parentFragment);
 
 				foreach (TSqlFragment f in children)
 				{
@@ -112,7 +90,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 		{
 			TreeNode tn = new TreeNode();
 
-			tn.Text = _scriptParser.GetFragmentTypeName(fragment);
+			tn.Text = ScriptParser.GetFragmentTypeName(fragment);
 			tn.Tag = fragment;
 
 			return tn;
@@ -130,7 +108,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 		private void tvwFragmentTree_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			TSqlFragment fragment = (TSqlFragment)e.Node.Tag;
-			txtFragmentSQL.Text = _scriptParser.GetFragmentSQL(fragment);
+			txtFragmentSQL.Text = ScriptParser.GetFragmentSQL(fragment);
 		}
 
 		#endregion
