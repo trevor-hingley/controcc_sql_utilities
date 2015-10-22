@@ -12,33 +12,11 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
 	public class oScriptParser
 	{
-		TSqlParser _parser;
-
-		public oScriptParser()
-		{
-			switch (ConfigurationManager.AppSettings["ParserCompatibilityLevel"])
-			{
-				case "90":
-					_parser = new TSql90Parser(true);
-					break;
-				case "100":
-					_parser = new TSql100Parser(true);
-					break;
-				case "110":
-					_parser = new TSql110Parser(true);
-					break;
-				default:
-					if (!oApplication.InDesign())
-					{
-						throw new ArgumentException("Invalid argument provided for [ParserCompatibilityLevel] configuration setting!");
-					}
-					break;
-			}
-		}
-
 		public TSqlFragment GetRootFragment(TextReader textReader, out IList<ParseError> parseErrors)
 		{
-			return _parser.Parse(textReader, out parseErrors);
+			TSqlParser sqlParser = CreateSQLParser();
+
+			return sqlParser.Parse(textReader, out parseErrors);
 		}
 
 		public List<TSqlFragment> GetFragmentChildren(TSqlFragment parentFragment)
@@ -71,6 +49,32 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			}
 
 			return sql.ToString().Trim();
+		}
+
+		#endregion
+
+		#region Private implementation
+
+		private TSqlParser CreateSQLParser()
+		{
+			TSqlParser sqlParser;
+
+			switch (ConfigurationManager.AppSettings["ParserCompatibilityLevel"])
+			{
+				case "90":
+					sqlParser = new TSql90Parser(true);
+					break;
+				case "100":
+					sqlParser = new TSql100Parser(true);
+					break;
+				case "110":
+					sqlParser = new TSql110Parser(true);
+					break;
+				default:
+					throw new ArgumentException("Invalid argument provided for [ParserCompatibilityLevel] configuration setting!");
+			}
+
+			return sqlParser;
 		}
 
 		#endregion

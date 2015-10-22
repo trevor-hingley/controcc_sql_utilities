@@ -18,6 +18,8 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			InitializeComponent();
 		}
 
+		#region Base class overrides
+
 		protected override void ClearWindow()
 		{
 			tvwFragmentTree.Nodes.Clear();
@@ -58,6 +60,13 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 				txtFragmentSQL.Text = sb.ToString();
 			}
 		}
+
+		protected override void DisplayError(Exception ex)
+		{
+			txtFragmentSQL.Text = ex.Message;
+		}
+
+		#endregion
 
 		#region Treeview methods
 

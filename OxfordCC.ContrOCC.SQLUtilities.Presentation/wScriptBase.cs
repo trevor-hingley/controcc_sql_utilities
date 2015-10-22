@@ -15,7 +15,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
 	public partial class wScriptBase : Form
 	{
-		private oScriptParser _scriptParser;
+		private oScriptParser _scriptParser = new oScriptParser();
 
 		protected oScriptParser ScriptParser
 		{
@@ -46,8 +46,10 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 					ClearWindow();
 					OpenScript(ofd.FileName);
 				}
-				catch
-				{ }
+				catch (Exception ex)
+				{
+					DisplayError(ex);
+				}
 				finally
 				{
 					this.Cursor = saveCursor;
@@ -57,12 +59,20 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		protected virtual void ClearWindow()
 		{
-			throw new NotImplementedException();
+			if (!this.DesignMode)
+				throw new NotImplementedException();
 		}
 
 		protected virtual void OpenScript(string scriptFilePath)
 		{
-			throw new NotImplementedException();
+			if (!this.DesignMode)
+				throw new NotImplementedException();
+		}
+
+		protected virtual void DisplayError(Exception ex)
+		{
+			if (!this.DesignMode)
+				throw new NotImplementedException();
 		}
 	}
 }
