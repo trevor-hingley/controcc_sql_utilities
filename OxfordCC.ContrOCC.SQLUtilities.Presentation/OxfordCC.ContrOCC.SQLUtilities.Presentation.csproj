@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="oApplication.cs" />
     <Compile Include="oScriptParser.cs" />
     <Compile Include="oVisitorAll.cs" />
     <Compile Include="oVisitorBase.cs" />

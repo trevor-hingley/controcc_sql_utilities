@@ -28,7 +28,10 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 					_parser = new TSql110Parser(true);
 					break;
 				default:
-					throw new ArgumentException("Invalid argument provided for [ParserCompatibilityLevel] configuration setting!");
+					if (!oApplication.InDesign())
+					{
+						throw new ArgumentException("Invalid argument provided for [ParserCompatibilityLevel] configuration setting!");
+					}
 					break;
 			}
 		}
