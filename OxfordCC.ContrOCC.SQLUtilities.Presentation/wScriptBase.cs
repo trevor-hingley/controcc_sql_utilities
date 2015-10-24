@@ -44,11 +44,18 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 				{
 					this.Cursor = Cursors.WaitCursor;
 					ClearWindow();
-					OpenScript(ofd.FileName);
+
+					IList<ParseError> parseErrors;
+					TSqlFragment rootFragment = OpenScript(ofd.FileName, out parseErrors);
+
+					if ((parseErrors == null) || (parseErrors.Count == 0))
+						DisplayScript(rootFragment);
+					else
+						DisplayParseErrors(parseErrors);
 				}
 				catch (Exception ex)
 				{
-					DisplayError(ex);
+					DisplayException(ex);
 				}
 				finally
 				{
@@ -63,13 +70,31 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 				throw new NotImplementedException();
 		}
 
-		protected virtual void OpenScript(string scriptFilePath)
+		protected virtual TSqlFragment OpenScript(string scriptFilePath, out IList<ParseError> parseErrors)
+		{
+			TSqlFragment rootFragment;
+
+			using (TextReader textReader = new StreamReader(scriptFilePath))
+			{
+				rootFragment = ScriptParser.GetRootFragment(textReader, out parseErrors);
+			}
+
+			return rootFragment;
+		}
+
+		protected virtual void DisplayScript(TSqlFragment rootFragment)
 		{
 			if (!this.DesignMode)
 				throw new NotImplementedException();
 		}
 
-		protected virtual void DisplayError(Exception ex)
+		protected virtual void DisplayParseErrors(IList<ParseError> parseErrors)
+		{
+			if (!this.DesignMode)
+				throw new NotImplementedException();
+		}
+
+		protected virtual void DisplayException(Exception ex)
 		{
 			if (!this.DesignMode)
 				throw new NotImplementedException();

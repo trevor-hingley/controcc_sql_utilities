@@ -26,42 +26,29 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			txtFragmentSQL.Text = string.Empty;
 		}
 
-		protected override void OpenScript(string scriptFilePath)
+		protected override void DisplayScript(TSqlFragment rootFragment)
 		{
-			IList<ParseError> parseErrors;
-			TSqlFragment rootFragment;
+			TreeNode rootTreeNode = CreateNewTreeNodeForFragment(rootFragment);
 
-			tvwFragmentTree.Nodes.Clear();
-			txtFragmentSQL.Text = string.Empty;
-
-			using (TextReader textReader = new StreamReader(scriptFilePath))
-			{
-				rootFragment = ScriptParser.GetRootFragment(textReader, out parseErrors);
-			}
-
-			if ((parseErrors == null) || (parseErrors.Count == 0))
-			{
-				TreeNode rootTreeNode = CreateNewTreeNodeForFragment(rootFragment);
-
-				tvwFragmentTree.Nodes.Add(rootTreeNode);
-				AddTreeNodeChildren(rootTreeNode);
-				ExpandTreeNode(rootTreeNode);
-			}
-			else
-			{
-				StringBuilder sb = new StringBuilder();
-
-				foreach (ParseError pe in parseErrors)
-				{
-					sb.AppendLine(pe.Message);
-					sb.AppendLine();
-				}
-
-				txtFragmentSQL.Text = sb.ToString();
-			}
+			tvwFragmentTree.Nodes.Add(rootTreeNode);
+			AddTreeNodeChildren(rootTreeNode);
+			ExpandTreeNode(rootTreeNode);
 		}
 
-		protected override void DisplayError(Exception ex)
+		protected override void DisplayParseErrors(IList<ParseError> parseErrors)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			foreach (ParseError pe in parseErrors)
+			{
+				sb.AppendLine(pe.Message);
+				sb.AppendLine();
+			}
+
+			txtFragmentSQL.Text = sb.ToString();
+		}
+
+		protected override void DisplayException(Exception ex)
 		{
 			txtFragmentSQL.Text = ex.Message;
 		}
