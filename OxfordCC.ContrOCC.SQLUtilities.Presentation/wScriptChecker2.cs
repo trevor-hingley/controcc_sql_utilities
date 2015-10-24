@@ -57,7 +57,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		private void CheckTemporaryTableCharacterColumnCollations(TSqlFragment rootFragment)
 		{
-			List<TSqlFragment> createTableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatements());
+			List<TSqlFragment> createTableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
 			List<TSqlFragment> columnDefinitionFragments;
 			string columnDefinitionSQL;
 			List<TSqlFragment> sqlDataTypeDefinitionFragments;
@@ -65,7 +65,35 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 			foreach (TSqlFragment createTableFragment in createTableFragements)
 			{
-				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinitions());
+				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
+
+				foreach (TSqlFragment columnDefinitionFragment in columnDefinitionFragments)
+				{
+					columnDefinitionSQL = columnDefinitionSQL = ScriptParser.GetFragmentSQL(columnDefinitionFragment);
+					sqlDataTypeDefinitionFragments = ScriptParser.GetFragmentChildren(columnDefinitionFragment, new oVisitorSQLDataTypeReference());
+
+					foreach (TSqlFragment sqlDataTypeDefinitionFragment in sqlDataTypeDefinitionFragments)
+					{
+						sqlDataTypeDefinitionSQL = ScriptParser.GetFragmentSQL(sqlDataTypeDefinitionFragment);
+
+						if ((sqlDataTypeDefinitionSQL.ToLower().Contains("char")) && (!columnDefinitionSQL.Contains("database_default")))
+							AddIssue("Temporary table missing collation for character column", columnDefinitionFragment.StartLine, columnDefinitionSQL, true);
+					}
+				}
+			}
+		}
+
+		private void CheckTableVariableCharacterColumnCollations(TSqlFragment rootFragment)
+		{
+			List<TSqlFragment> createTableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
+			List<TSqlFragment> columnDefinitionFragments;
+			string columnDefinitionSQL;
+			List<TSqlFragment> sqlDataTypeDefinitionFragments;
+			string sqlDataTypeDefinitionSQL;
+
+			foreach (TSqlFragment createTableFragment in createTableFragements)
+			{
+				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
 
 				foreach (TSqlFragment columnDefinitionFragment in columnDefinitionFragments)
 				{

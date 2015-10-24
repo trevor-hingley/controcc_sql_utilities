@@ -8,7 +8,7 @@ using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
-	public class oVisitorCreateTableStatements : oVisitorBase
+	public class oVisitorCreateTableStatement : oVisitorBase
 	{
 		public override void ExplicitVisit(CreateTableStatement fragment) { _fragments.Add(fragment); }
 	}

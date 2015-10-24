@@ -58,8 +58,8 @@
     <Compile Include="oScriptParser.cs" />
     <Compile Include="oVisitorAll.cs" />
     <Compile Include="oVisitorBase.cs" />
-    <Compile Include="oVisitorColumnDefinitions.cs" />
-    <Compile Include="oVisitorCreateTableStatements.cs" />
+    <Compile Include="oVisitorColumnDefinition.cs" />
+    <Compile Include="oVisitorCreateTableStatement.cs" />
     <Compile Include="oVisitorSQLDataTypeReference.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
