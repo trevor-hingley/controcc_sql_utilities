@@ -39,13 +39,13 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
 				Cursor saveCursor = this.Cursor;
-
+				IList<ParseError> parseErrors;
 				try
 				{
 					this.Cursor = Cursors.WaitCursor;
 					ClearWindow();
 
-					IList<ParseError> parseErrors;
+					//IList<ParseError> parseErrors;
 					TSqlFragment rootFragment = OpenScript(ofd.FileName, out parseErrors);
 
 					if ((parseErrors == null) || (parseErrors.Count == 0))

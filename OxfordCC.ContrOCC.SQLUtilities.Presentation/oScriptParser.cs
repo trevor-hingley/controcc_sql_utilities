@@ -12,6 +12,8 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {
 	public class oScriptParser
 	{
+		#region Public interface
+
 		public TSqlFragment GetRootFragment(TextReader textReader, out IList<ParseError> parseErrors)
 		{
 			TSqlParser sqlParser = CreateSQLParser();
@@ -27,6 +29,29 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 			return visitor.Fragments;
 		}
+
+		public List<TSqlFragment> GetFragmentChildren(TSqlFragment parentFragment, oVisitorBase visitor, bool recurseChildren = false)
+		{
+			parentFragment.AcceptChildren(visitor);
+
+			List<TSqlFragment> children = visitor.Fragments;
+			List<TSqlFragment> grandChildren;
+
+			if (recurseChildren)
+			{
+				foreach (TSqlFragment f in children)
+				{
+					grandChildren = GetFragmentChildren(f, visitor, recurseChildren);
+
+					if ((grandChildren != null) && (grandChildren.Count > 0))
+						children.AddRange(grandChildren);
+				}
+			}
+
+			return children;
+		}
+
+		#endregion
 
 		#region Helper methods
 
