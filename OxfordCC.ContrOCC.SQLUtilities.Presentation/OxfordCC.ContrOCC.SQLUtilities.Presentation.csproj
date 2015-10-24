@@ -60,6 +60,7 @@
     <Compile Include="oVisitorBase.cs" />
     <Compile Include="oVisitorColumnDefinition.cs" />
     <Compile Include="oVisitorCreateTableStatement.cs" />
+    <Compile Include="oVisitorDeclareTableVariableStatement.cs" />
     <Compile Include="oVisitorSQLDataTypeReference.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

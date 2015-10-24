@@ -26,6 +26,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 		protected override void DisplayScript(TSqlFragment rootFragment)
 		{
 			CheckTemporaryTableCharacterColumnCollations(rootFragment);
+			CheckTableVariableCharacterColumnCollations(rootFragment);
 		}
 
 		protected override void DisplayParseErrors(IList<ParseError> parseErrors)
@@ -57,13 +58,13 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		private void CheckTemporaryTableCharacterColumnCollations(TSqlFragment rootFragment)
 		{
-			List<TSqlFragment> createTableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
+			List<TSqlFragment> createTemporaryTableFragments = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
 			List<TSqlFragment> columnDefinitionFragments;
 			string columnDefinitionSQL;
 			List<TSqlFragment> sqlDataTypeDefinitionFragments;
 			string sqlDataTypeDefinitionSQL;
 
-			foreach (TSqlFragment createTableFragment in createTableFragements)
+			foreach (TSqlFragment createTableFragment in createTemporaryTableFragments)
 			{
 				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
 
@@ -85,13 +86,13 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		private void CheckTableVariableCharacterColumnCollations(TSqlFragment rootFragment)
 		{
-			List<TSqlFragment> createTableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
+			List<TSqlFragment> declareTableVariableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorDeclareTableVariableStatement());
 			List<TSqlFragment> columnDefinitionFragments;
 			string columnDefinitionSQL;
 			List<TSqlFragment> sqlDataTypeDefinitionFragments;
 			string sqlDataTypeDefinitionSQL;
 
-			foreach (TSqlFragment createTableFragment in createTableFragements)
+			foreach (TSqlFragment createTableFragment in declareTableVariableFragements)
 			{
 				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
 
@@ -105,7 +106,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 						sqlDataTypeDefinitionSQL = ScriptParser.GetFragmentSQL(sqlDataTypeDefinitionFragment);
 
 						if ((sqlDataTypeDefinitionSQL.ToLower().Contains("char")) && (!columnDefinitionSQL.Contains("database_default")))
-							AddIssue("Temporary table missing collation for character column", columnDefinitionFragment.StartLine, columnDefinitionSQL, true);
+							AddIssue("Table variable missing collation for character column", columnDefinitionFragment.StartLine, columnDefinitionSQL, false);
 					}
 				}
 			}
