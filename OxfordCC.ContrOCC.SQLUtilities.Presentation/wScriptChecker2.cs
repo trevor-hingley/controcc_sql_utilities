@@ -30,8 +30,8 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 			List<oIssue> issuesFound = new List<oIssue>();
 			oSQLStandardsChecker sqlStandardsChecker = new oSQLStandardsChecker(ScriptParser, rootFragment);
 
-			issuesFound.AddRange(sqlStandardsChecker.CheckTemporaryTableCharacterColumnCollations());
 			issuesFound.AddRange(sqlStandardsChecker.CheckTableVariableCharacterColumnCollations());
+			issuesFound.AddRange(sqlStandardsChecker.CheckTemporaryTableCharacterColumnCollations());
 
 			DisplayIssues(issuesFound);
 		}
