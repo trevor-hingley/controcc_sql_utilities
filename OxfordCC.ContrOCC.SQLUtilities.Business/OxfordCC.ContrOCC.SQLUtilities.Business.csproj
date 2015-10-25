@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="oIssue.cs" />
     <Compile Include="oScriptParser.cs" />
+    <Compile Include="oSQLStandardsChecker.cs" />
     <Compile Include="oVisitorAll.cs" />
     <Compile Include="oVisitorBase.cs" />
     <Compile Include="oVisitorColumnDefinition.cs" />

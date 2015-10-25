@@ -1,0 +1,38 @@
+﻿CREATE TABLE #TempTable
+(
+	id			int				IDENTITY(1,1)				NOT NULL
+	, rv		rowversion									NOT NULL
+	, code		varchar(10)									NOT NULL
+	, name		varchar(100)	COLLATE database_default	NULL
+);
+
+CREATE TABLE #TempTable2
+(
+	id			int				IDENTITY(1,1)				NOT NULL
+	, rv		rowversion									NOT NULL
+	, code		varchar(10)		COLLATE database_default	NOT NULL
+	, name		varchar(100)								NULL
+);
+
+DECLARE @TempTable TABLE
+(
+	id			int				IDENTITY(1,1)				NOT NULL
+	, rv		rowversion									NOT NULL
+	, code		varchar(10)		COLLATE database_default	NOT NULL
+	, name		varchar(100)								NULL
+);
+
+WITH CTE AS
+(
+	SELECT
+		id
+		, rv
+		, code
+		, name
+	FROM #TempTable
+)
+
+SELECT * FROM CTE;
+
+DROP TABLE #TempTable;
+DROP TABLE #TempTable2;

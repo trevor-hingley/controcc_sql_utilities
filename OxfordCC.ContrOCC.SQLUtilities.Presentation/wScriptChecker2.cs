@@ -27,8 +27,13 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		protected override void DisplayScript(TSqlFragment rootFragment)
 		{
-			CheckTemporaryTableCharacterColumnCollations(rootFragment);
-			CheckTableVariableCharacterColumnCollations(rootFragment);
+			List<oIssue> issuesFound = new List<oIssue>();
+			oSQLStandardsChecker sqlStandardsChecker = new oSQLStandardsChecker(ScriptParser, rootFragment);
+
+			issuesFound.AddRange(sqlStandardsChecker.CheckTemporaryTableCharacterColumnCollations());
+			issuesFound.AddRange(sqlStandardsChecker.CheckTableVariableCharacterColumnCollations());
+
+			DisplayIssues(issuesFound);
 		}
 
 		protected override void DisplayParseErrors(IList<ParseError> parseErrors)
@@ -45,72 +50,21 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 
 		#region Private implementation
 
-		private void AddIssue(string issueType, int line, string sqlText, bool isSerious)
+		private void DisplayIssues(List<oIssue> issuesFound)
 		{
-			ListViewItem lvi = lvwIssues.Items.Add(issueType);
+			ListViewItem lvi;
 
-			if (isSerious)
-				lvi.ForeColor = Color.Red;
-			else
-				lvi.ForeColor = Color.Blue;
-
-			lvi.SubItems.Add(line.ToString());
-			lvi.SubItems.Add(sqlText);
-		}
-
-		private void CheckTemporaryTableCharacterColumnCollations(TSqlFragment rootFragment)
-		{
-			List<TSqlFragment> createTemporaryTableFragments = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorCreateTableStatement());
-			List<TSqlFragment> columnDefinitionFragments;
-			string columnDefinitionSQL;
-			List<TSqlFragment> sqlDataTypeDefinitionFragments;
-			string sqlDataTypeDefinitionSQL;
-
-			foreach (TSqlFragment createTableFragment in createTemporaryTableFragments)
+			foreach (oIssue i in issuesFound)
 			{
-				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
+				lvi = lvwIssues.Items.Add(i.IssueType);
 
-				foreach (TSqlFragment columnDefinitionFragment in columnDefinitionFragments)
-				{
-					columnDefinitionSQL = columnDefinitionSQL = ScriptParser.GetFragmentSQL(columnDefinitionFragment);
-					sqlDataTypeDefinitionFragments = ScriptParser.GetFragmentChildren(columnDefinitionFragment, new oVisitorSQLDataTypeReference());
+				if (i.IsSerious)
+					lvi.ForeColor = Color.Red;
+				else
+					lvi.ForeColor = Color.Blue;
 
-					foreach (TSqlFragment sqlDataTypeDefinitionFragment in sqlDataTypeDefinitionFragments)
-					{
-						sqlDataTypeDefinitionSQL = ScriptParser.GetFragmentSQL(sqlDataTypeDefinitionFragment);
-
-						if ((sqlDataTypeDefinitionSQL.ToLower().Contains("char")) && (!columnDefinitionSQL.Contains("database_default")))
-							AddIssue("Temporary table missing collation for character column", columnDefinitionFragment.StartLine, columnDefinitionSQL, true);
-					}
-				}
-			}
-		}
-
-		private void CheckTableVariableCharacterColumnCollations(TSqlFragment rootFragment)
-		{
-			List<TSqlFragment> declareTableVariableFragements = ScriptParser.GetFragmentChildren(rootFragment, new oVisitorDeclareTableVariableStatement());
-			List<TSqlFragment> columnDefinitionFragments;
-			string columnDefinitionSQL;
-			List<TSqlFragment> sqlDataTypeDefinitionFragments;
-			string sqlDataTypeDefinitionSQL;
-
-			foreach (TSqlFragment createTableFragment in declareTableVariableFragements)
-			{
-				columnDefinitionFragments = ScriptParser.GetFragmentChildren(createTableFragment, new oVisitorColumnDefinition());
-
-				foreach (TSqlFragment columnDefinitionFragment in columnDefinitionFragments)
-				{
-					columnDefinitionSQL = columnDefinitionSQL = ScriptParser.GetFragmentSQL(columnDefinitionFragment);
-					sqlDataTypeDefinitionFragments = ScriptParser.GetFragmentChildren(columnDefinitionFragment, new oVisitorSQLDataTypeReference());
-
-					foreach (TSqlFragment sqlDataTypeDefinitionFragment in sqlDataTypeDefinitionFragments)
-					{
-						sqlDataTypeDefinitionSQL = ScriptParser.GetFragmentSQL(sqlDataTypeDefinitionFragment);
-
-						if ((sqlDataTypeDefinitionSQL.ToLower().Contains("char")) && (!columnDefinitionSQL.Contains("database_default")))
-							AddIssue("Table variable missing collation for character column", columnDefinitionFragment.StartLine, columnDefinitionSQL, false);
-					}
-				}
+				lvi.SubItems.Add(i.LineNumber.ToString());
+				lvi.SubItems.Add(i.SQLText);
 			}
 		}
 

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxfordCC.ContrOCC.SQLUtilit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxfordCC.ContrOCC.SQLUtilities.Business", "OxfordCC.ContrOCC.SQLUtilities.Business\OxfordCC.ContrOCC.SQLUtilities.Business.csproj", "{73620E1E-0F06-469F-8F56-3BDBFDC054F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxfordCC.ContrOCC.SQLUtilities.Business.Test", "OxfordCC.ContrOCC.SQLUtilities.Business.Test\OxfordCC.ContrOCC.SQLUtilities.Business.Test.csproj", "{1DF75401-B81E-473B-A478-1E47688332D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{73620E1E-0F06-469F-8F56-3BDBFDC054F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73620E1E-0F06-469F-8F56-3BDBFDC054F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73620E1E-0F06-469F-8F56-3BDBFDC054F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF75401-B81E-473B-A478-1E47688332D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF75401-B81E-473B-A478-1E47688332D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF75401-B81E-473B-A478-1E47688332D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF75401-B81E-473B-A478-1E47688332D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
