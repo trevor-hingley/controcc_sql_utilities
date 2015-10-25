@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 
-namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
+namespace OxfordCC.ContrOCC.SQLUtilities.Business
 {
 	public class oVisitorColumnDefinition : oVisitorBase
 	{

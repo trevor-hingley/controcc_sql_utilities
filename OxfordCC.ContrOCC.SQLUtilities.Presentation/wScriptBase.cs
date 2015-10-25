@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 using System.IO;
+using OxfordCC.ContrOCC.SQLUtilities.Business;
 
 namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
 {

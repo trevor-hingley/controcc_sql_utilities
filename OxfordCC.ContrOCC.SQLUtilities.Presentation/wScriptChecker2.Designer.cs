@@ -41,6 +41,7 @@
             this.Line,
             this.SQLText});
 			this.lvwIssues.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvwIssues.GridLines = true;
 			this.lvwIssues.Location = new System.Drawing.Point(0, 24);
 			this.lvwIssues.Name = "lvwIssues";
 			this.lvwIssues.Size = new System.Drawing.Size(584, 338);

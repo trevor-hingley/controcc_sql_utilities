@@ -8,7 +8,7 @@ using Microsoft.SqlServer.TransactSql.ScriptDom;
 using System.Configuration;
 using System.IO;
 
-namespace OxfordCC.ContrOCC.SQLUtilities.Presentation
+namespace OxfordCC.ContrOCC.SQLUtilities.Business
 {
 	public class oScriptParser
 	{
