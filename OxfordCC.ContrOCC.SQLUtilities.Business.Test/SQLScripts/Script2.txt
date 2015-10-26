@@ -1,0 +1,21 @@
+﻿EXEC [SYS_RestoreOrphanedUsers];
+EXEC dbo.[SYS_RestoreOrphanedUsers];
+EXEC Controcc_Testing.dbo.[SYS_RestoreOrphanedUsers];
+EXEC Controcc_Testing..[SYS_RestoreOrphanedUsers];
+
+SELECT * FROM T_Client;
+SELECT * FROM dbo.T_Client;
+SELECT * FROM Controcc_Testing.dbo.T_Client;
+SELECT * FROM Controcc_Testing..T_Client;
+
+SELECT
+	ies.SpecificationName
+	, iesi.*
+FROM dbo.TRefSys_ImportExportSpecification ies
+JOIN TRefSys_ImportExportSpecificationItem iesi ON ies.ImportExportSpecification = iesi.ImportExportSpecification;
+
+SELECT
+	ies.SpecificationName
+	, iesi.*
+FROM dbo.TRefSys_ImportExportSpecification ies
+JOIN dbo.TRefSys_ImportExportSpecificationItem iesi ON ies.ImportExportSpecification = iesi.ImportExportSpecification;

@@ -26,7 +26,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Business.Test
 
 		#region Private implementation
 
-		public void RunTest(string sqlScriptFileName, string methodName, int expectedIssueCount)
+		private void RunTest(string sqlScriptFileName, string methodName, int expectedIssueCount)
 		{
 			oScriptParser scriptParser = new oScriptParser();
 			TSqlFragment rootFragment;
