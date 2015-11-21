@@ -54,6 +54,7 @@
     <Compile Include="oVisitorColumnDefinition.cs" />
     <Compile Include="oVisitorCreateTableStatement.cs" />
     <Compile Include="oVisitorDeclareTableVariableStatement.cs" />
+    <Compile Include="oVisitorExecutableProcedureReference.cs" />
     <Compile Include="oVisitorSQLDataTypeReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

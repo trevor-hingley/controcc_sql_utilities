@@ -13,6 +13,18 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Business.Test
 	public class UnitTests
 	{
 		[TestMethod]
+		public void StandardsChecker_CheckProcedureName_Test1()
+		{
+			RunTest("Script2.txt", "CheckProcedureName", 2);
+		}
+
+		[TestMethod]
+		public void StandardsChecker_CheckProcedureSchemaPrefixes_Test1()
+		{
+			RunTest("Script2.txt", "CheckProcedureSchemaPrefixes", 3);
+		}
+
+		[TestMethod]
 		public void StandardsChecker_CheckTableVariableCharacterColumnCollations_Test1()
 		{
 			RunTest("Script1.txt", "CheckTableVariableCharacterColumnCollations", 1);
@@ -39,9 +51,9 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Business.Test
 
 			oSQLStandardsChecker _standardsChecker = new oSQLStandardsChecker(scriptParser, rootFragment);
 			MethodInfo testMethodInfo = _standardsChecker.GetType().GetMethod(methodName);
-			List<oIssue> _issues = (List<oIssue>) testMethodInfo.Invoke(_standardsChecker, new object[] { });
+			List<oIssue> issuesFound = (List<oIssue>) testMethodInfo.Invoke(_standardsChecker, new object[] { });
 
-			Assert.AreEqual(expectedIssueCount, _issues.Count, "An unexpected number of issues were found.");
+			Assert.AreEqual(expectedIssueCount, issuesFound.Count, "An unexpected number of issues were found.");
 		}
 
 		private string ReadSQLScript(string sqlScriptFileName)

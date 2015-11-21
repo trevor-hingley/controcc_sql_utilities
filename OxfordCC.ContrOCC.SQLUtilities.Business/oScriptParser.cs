@@ -69,7 +69,7 @@ namespace OxfordCC.ContrOCC.SQLUtilities.Business
 				for (int counter = fragment.FirstTokenIndex; counter <= fragment.LastTokenIndex; counter++)
 				{
 					sql.Append(fragment.ScriptTokenStream[counter].Text);
-					sql.Append(" ");
+					//sql.Append(" ");
 				}
 			}
 
